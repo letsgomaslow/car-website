@@ -6,11 +6,15 @@ A dependency-free, multi-page static website based on the approved **Bayline** d
 
 - `/` — Homepage
 - `/services/` — Searchable catalog with 89 published service items in 17 categories
+- `/services/<service-area>/` — 11 plain-language category guides with services, safety guidance, symptoms, and system context
 - `/tpms-programming/` — Dedicated TPMS programming page
 - `/about/` — Business overview
 - `/contact/` — Phone, address, hours, and directions
 - `/privacy/` — Current site privacy notice
+- `/es/` and `/es/servicios/…` — Spanish route equivalents, including all 11 category guides and TPMS
 - `/404.html` — Custom not-found page
+
+The homepage routes symptom-led visitors to the relevant guide. The services page serves visitors who know a repair name, with the searchable catalog first and compact symptom and vehicle-system paths as alternatives.
 
 ## Local preview
 

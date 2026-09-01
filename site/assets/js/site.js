@@ -176,21 +176,41 @@ const serviceGroups = [...document.querySelectorAll('[data-service-group]')];
 const serviceCount = document.querySelector('[data-service-count]');
 const noResults = document.querySelector('[data-no-results]');
 
-const normalizeText = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+const normalizeText = (value) => value
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, ' ')
+  .trim();
+
+const normalizeSearchToken = (token) => {
+  if (token.length > 4 && token.endsWith('ies')) return `${token.slice(0, -3)}y`;
+  if (token.length > 3 && token.endsWith('s') && !token.endsWith('ss')) return token.slice(0, -1);
+  return token;
+};
+
+const tokenizeSearchText = (value) => normalizeText(value)
+  .split(' ')
+  .filter(Boolean)
+  .map(normalizeSearchToken);
 
 const filterServices = ({ updateUrl = true } = {}) => {
   if (!serviceFilter) return;
-  const query = normalizeText(serviceFilter.value);
+  const queryTokens = tokenizeSearchText(serviceFilter.value);
   let visibleCount = 0;
 
   serviceGroups.forEach((group) => {
-    const searchText = normalizeText(group.dataset.search || group.textContent || '');
-    const isVisible = !query || searchText.includes(query);
+    const renderedSearchText = [...group.querySelectorAll('summary h2, .service-group__content > p:first-child, .service-list li')]
+      .map((element) => element.textContent || '')
+      .join(' ');
+    const searchTokens = tokenizeSearchText(`${group.dataset.search || ''} ${renderedSearchText}`);
+    const isVisible = queryTokens.length === 0
+      || queryTokens.every((queryToken) => searchTokens.some((searchToken) => searchToken.includes(queryToken)));
     group.hidden = !isVisible;
 
     if (isVisible) {
       visibleCount += 1;
-      if (query.length >= 3) group.open = true;
+      if (normalizeText(serviceFilter.value).length >= 3) group.open = true;
     }
   });
 

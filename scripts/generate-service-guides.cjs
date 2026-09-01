@@ -47,7 +47,7 @@ const localizedUi = {
     callNumber: 'Call 732-822-4534',
     directions: 'Get directions',
     home: 'Home',
-    serviceGuides: 'Service guides',
+    allServices: 'View all services',
     cuesEyebrow: 'What the driver notices',
     cuesTitle: 'See, hear, smell, or feel something different?',
     cuesIntro: 'These details help identify a useful starting point. They are not a diagnosis, and the same symptom can come from more than one condition.',
@@ -97,7 +97,7 @@ const localizedUi = {
     callNumber: 'Llame al 732-822-4534',
     directions: 'Cómo llegar',
     home: 'Inicio',
-    serviceGuides: 'Guías de servicio',
+    allServices: 'Ver todos los servicios',
     cuesEyebrow: 'Lo que nota al manejar',
     cuesTitle: '¿Ve, oye, huele o siente algo diferente?',
     cuesIntro: 'Estos detalles ayudan a identificar un punto de partida. No son un diagnóstico y un mismo síntoma puede tener más de una causa.',
@@ -354,15 +354,15 @@ function renderGuide(guide, key) {
   <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
   ${renderHeader(guide, key, ui)}
   <main id="main">
-    <header class="page-hero guide-hero"><div class="shell"><nav aria-label="${key === 'en' ? 'Breadcrumb' : 'Ruta de navegación'}"><ol class="breadcrumb"><li><a href="${coreRoute('home', id)}">${esc(ui.home)}</a></li><li><a href="${coreRoute('services', id)}">${esc(ui.services)}</a></li><li aria-current="page">${esc(copy.title)}</li></ol></nav><p class="eyebrow">${esc(copy.eyebrow)}</p><h1>${esc(copy.headline)}</h1><p class="page-hero__lead">${esc(copy.lead)}</p><div class="page-hero__actions"><a class="button button--orange" href="tel:+17328224534">${esc(copy.ctaLabel)}</a><a class="button button--outline" href="${coreRoute('services', id)}">${esc(ui.serviceGuides)}</a></div></div></header>
-
-    <section class="section section--paper" aria-labelledby="cues-title"><div class="shell"><div class="section-heading"><div><p class="eyebrow">${esc(ui.cuesEyebrow)}</p><h2 id="cues-title">${esc(ui.cuesTitle)}</h2></div><p>${esc(ui.cuesIntro)}</p></div><div class="guide-cues">${copy.cues.map((cue) => `<article class="guide-cue"><span>${esc(cue.label)}</span><h3>${esc(cue.title)}</h3><p>${esc(cue.text)}</p></article>`).join('')}</div></div></section>
-
-    <section class="section section--raised guide-system" aria-labelledby="system-title"><div class="shell guide-system__grid"><div class="guide-system__copy"><p class="eyebrow">${esc(ui.systemEyebrow)}</p><h2 id="system-title">${esc(copy.systemTitle)}</h2>${copy.systemParagraphs.map((paragraph) => `<p>${esc(paragraph)}</p>`).join('')}</div>${renderVisual(guide, copy)}</div></section>
+    <header class="page-hero guide-hero"><div class="shell"><nav aria-label="${key === 'en' ? 'Breadcrumb' : 'Ruta de navegación'}"><ol class="breadcrumb"><li><a href="${coreRoute('home', id)}">${esc(ui.home)}</a></li><li><a href="${coreRoute('services', id)}">${esc(ui.services)}</a></li><li aria-current="page">${esc(copy.title)}</li></ol></nav><p class="eyebrow">${esc(copy.eyebrow)}</p><h1>${esc(copy.headline)}</h1><p class="page-hero__lead">${esc(copy.lead)}</p><div class="page-hero__actions"><a class="button button--orange" href="tel:+17328224534">${esc(copy.ctaLabel)}</a><a class="button button--outline" href="${coreRoute('services', id)}#all-services">${esc(ui.allServices)}</a></div></div></header>
 
     <section class="section section--paper guide-services" aria-labelledby="services-title"><div class="shell"><div class="section-heading"><div><p class="eyebrow">${esc(ui.servicesEyebrow)}</p><h2 id="services-title">${esc(ui.servicesTitle)}</h2></div><p>${esc(copy.servicesIntro)}</p></div><div class="guide-service-groups">${serviceGroups.map((group) => `<section class="guide-service-group"><h3>${esc(group.title)}</h3><ul>${group.items.map((item) => `<li>${esc(item)}</li>`).join('')}</ul></section>`).join('')}</div><p class="guide-source-note">${esc(ui.sourceNote)}</p></div></section>
 
     <section class="section section--raised guide-prepare" aria-labelledby="ready-title"><div class="shell guide-prepare__grid"><div><p class="eyebrow">${esc(ui.readyEyebrow)}</p><h2 id="ready-title">${esc(ui.readyTitle)}</h2><p>${esc(copy.readyIntro)}</p><ol class="guide-ready-list">${copy.ready.map((item, index) => `<li><span>0${index + 1}</span><p>${esc(item)}</p></li>`).join('')}</ol></div><aside class="guide-safety"><p class="eyebrow">${esc(ui.safetyEyebrow)}</p><h2>${esc(copy.safetyTitle)}</h2><p>${esc(copy.safety)}</p></aside></div></section>
+
+    <section class="section section--paper" aria-labelledby="cues-title"><div class="shell"><div class="section-heading"><div><p class="eyebrow">${esc(ui.cuesEyebrow)}</p><h2 id="cues-title">${esc(ui.cuesTitle)}</h2></div><p>${esc(ui.cuesIntro)}</p></div><div class="guide-cues">${copy.cues.map((cue) => `<article class="guide-cue"><span>${esc(cue.label)}</span><h3>${esc(cue.title)}</h3><p>${esc(cue.text)}</p></article>`).join('')}</div></div></section>
+
+    <section class="section section--raised guide-system" aria-labelledby="system-title"><div class="shell guide-system__grid"><div class="guide-system__copy"><p class="eyebrow">${esc(ui.systemEyebrow)}</p><h2 id="system-title">${esc(copy.systemTitle)}</h2>${copy.systemParagraphs.map((paragraph) => `<p>${esc(paragraph)}</p>`).join('')}</div>${renderVisual(guide, copy)}</div></section>
 
     <section class="section section--paper" aria-labelledby="faq-title"><div class="shell"><div class="section-heading"><div><p class="eyebrow">${esc(ui.faqEyebrow)}</p><h2 id="faq-title">${esc(ui.faqTitle)}</h2></div></div><div class="faq-list">${copy.faqs.map((faq) => `<details><summary>${esc(faq.q)}</summary><p>${esc(faq.a)}</p></details>`).join('')}</div></div></section>
 

@@ -463,6 +463,23 @@ async function verifyServiceInventory(page) {
   await filter.fill('battery');
   assert(await page.locator('[data-service-group]:visible').count() === 1, 'battery search should return one service category');
   assert((await page.locator('[data-service-count]').innerText()).includes('1 category'), 'service result count did not update');
+
+  await filter.fill('brakes');
+  assert(await page.locator('[data-service-group]:visible').count() === 1, 'plural brakes search should return one service category');
+  assert(await page.locator('#brakes').getAttribute('open') !== null, 'plural brakes search should open the matching category');
+
+  await filter.fill('Brake Rotor Replacement');
+  assert(await page.locator('[data-service-group]:visible').count() === 1, 'exact service-name search should return one service category');
+  assert(await page.locator('#brakes').getAttribute('open') !== null, 'exact brake service search should open the matching category');
+
+  await filter.fill('30,000 Mile Service');
+  assert(await page.locator('[data-service-group]:visible').count() === 1, 'mileage service search should return one service category');
+  assert(await page.locator('#maintenance').getAttribute('open') !== null, 'mileage service search should open maintenance');
+
+  await filter.fill('alternator replacement');
+  assert(await page.locator('[data-service-group]:visible').count() === 1, 'component service search should return one service category');
+  assert(await page.locator('#battery').getAttribute('open') !== null, 'alternator search should open starting and charging');
+
   await filter.fill('');
   assert(await page.locator('[data-service-group]:visible').count() === inventory.categories.length, 'clearing search did not restore all categories');
 
@@ -485,6 +502,122 @@ async function verifyServiceInventory(page) {
 
   await page.evaluate(() => { window.location.hash = '#tires'; });
   await page.waitForFunction(() => document.querySelector('#tires')?.open && document.activeElement === document.querySelector('#tires summary'));
+}
+
+async function verifyCustomerJourneyStructure(browser) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+
+  for (const route of ['/', '/es/']) {
+    await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
+    const symptomLinks = await page.locator('.symptom-entry .service-preview-card').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    assert(symptomLinks.length === 6, `${route}: homepage should show six symptom starting points`);
+    assert(symptomLinks.every((href) => href && href.startsWith('/') && !href.includes('#')), `${route}: every homepage symptom should lead to a dedicated guide`);
+    assert(await page.locator('.service-link-list a').count() === 8, `${route}: homepage should use eight compact service-area links`);
+  }
+
+  for (const route of ['/services/', '/es/servicios/']) {
+    await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
+    const structure = await page.evaluate(() => {
+      const catalog = document.querySelector('#all-services');
+      const guides = document.querySelector('#service-guides');
+      return {
+        firstSectionId: document.querySelector('main > section')?.id,
+        catalogTop: catalog?.getBoundingClientRect().top + window.scrollY,
+        finderTop: document.querySelector('[data-service-filter]')?.getBoundingClientRect().top + window.scrollY,
+        guidesTop: guides?.getBoundingClientRect().top + window.scrollY,
+      };
+    });
+    assert(structure.firstSectionId === 'all-services', `${route}: searchable service catalog should be the first section after the hero`);
+    assert(structure.catalogTop < structure.guidesTop && structure.finderTop < structure.guidesTop, `${route}: service search should appear before the guide directory`);
+    assert(await page.locator('.symptom-shortcuts a').count() === 6, `${route}: services page should show six compact symptom shortcuts`);
+    assert(await page.locator('#service-guides .service-link-list a').count() === 12, `${route}: services page should show twelve compact service-area links`);
+    assert(await page.locator('[data-service-group] .text-link').count() === 17, `${route}: every service category should provide an explicit next step`);
+  }
+
+  for (const route of ['/services/brakes/', '/es/servicios/frenos/']) {
+    await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
+    const order = await page.evaluate(() => {
+      const sections = [...document.querySelectorAll('main > section')];
+      const indexOf = (selector) => sections.findIndex((section) => section.matches(selector));
+      return {
+        services: indexOf('.guide-services'),
+        prepare: indexOf('.guide-prepare'),
+        cues: indexOf('[aria-labelledby="cues-title"]'),
+        system: indexOf('.guide-system'),
+        faq: indexOf('[aria-labelledby="faq-title"]'),
+      };
+    });
+    assert(
+      order.services < order.prepare && order.prepare < order.cues && order.cues < order.system && order.system < order.faq,
+      `${route}: guide should prioritize published services and safety before education (${JSON.stringify(order)})`,
+    );
+    assert((await page.locator('.guide-hero .button--outline').getAttribute('href')).endsWith('#all-services'), `${route}: guide should return to the searchable catalog`);
+  }
+
+  await context.close();
+}
+
+async function verifyRepeatedCardAlignment(browser) {
+  const assertAligned = (values, label) => {
+    const spread = Math.max(...values) - Math.min(...values);
+    assert(spread <= 1, `${label} differed by ${spread}px: ${JSON.stringify(values)}`);
+  };
+
+  for (const viewport of [{ width: 320, height: 720 }, { width: 840, height: 900 }, { width: 1081, height: 900 }, { width: 1440, height: 900 }]) {
+    const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
+    const page = await context.newPage();
+
+    for (const route of ['/', '/es/']) {
+      await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
+      const metrics = await page.locator('.symptom-entry .service-preview-card').evaluateAll((cards) => cards.map((card) => {
+        const cardRect = card.getBoundingClientRect();
+        const titleRect = card.querySelector('h3').getBoundingClientRect();
+        const paragraphRect = card.querySelector('p').getBoundingClientRect();
+        const actionRect = card.querySelector('.service-preview-card__action').getBoundingClientRect();
+        return {
+          height: Math.round(cardRect.height),
+          titleTop: Math.round(titleRect.top - cardRect.top),
+          paragraphTop: Math.round(paragraphRect.top - cardRect.top),
+          actionTop: Math.round(actionRect.top - cardRect.top),
+        };
+      }));
+      assertAligned(metrics.map((metric) => metric.height), `${route} symptom-card heights at ${viewport.width}px`);
+      assertAligned(metrics.map((metric) => metric.titleTop), `${route} symptom-card title lanes at ${viewport.width}px`);
+      assertAligned(metrics.map((metric) => metric.paragraphTop), `${route} symptom-card description lanes at ${viewport.width}px`);
+      assertAligned(metrics.map((metric) => metric.actionTop), `${route} symptom-card action lanes at ${viewport.width}px`);
+    }
+
+    await context.close();
+  }
+
+  const context = await browser.newContext({ viewport: { width: 1024, height: 900 }, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  await page.goto(`${baseUrl}/es/servicios/frenos/`, { waitUntil: 'networkidle' });
+  const relatedMetrics = await page.locator('.guide-related .service-preview-card').evaluateAll((cards) => cards.map((card) => {
+    const cardRect = card.getBoundingClientRect();
+    return {
+      titleTop: Math.round(card.querySelector('h3').getBoundingClientRect().top - cardRect.top),
+      paragraphTop: Math.round(card.querySelector('p').getBoundingClientRect().top - cardRect.top),
+    };
+  }));
+  assertAligned(relatedMetrics.map((metric) => metric.titleTop), 'Spanish related-guide title lanes');
+  assertAligned(relatedMetrics.map((metric) => metric.paragraphTop), 'Spanish related-guide action lanes');
+
+  await page.goto(`${baseUrl}/es/servicios/bateria-sistema-electrico/`, { waitUntil: 'networkidle' });
+  const cueParagraphTops = await page.locator('.guide-cue').evaluateAll((cards) => cards.map((card) => {
+    const cardRect = card.getBoundingClientRect();
+    return Math.round(card.querySelector('p').getBoundingClientRect().top - cardRect.top);
+  }));
+  assertAligned(cueParagraphTops, 'Spanish guide-cue description lanes');
+  await context.close();
+
+  const narrowContext = await browser.newContext({ viewport: { width: 560, height: 800 }, reducedMotion: 'reduce' });
+  const narrowPage = await narrowContext.newPage();
+  await narrowPage.goto(`${baseUrl}/services/brakes/`, { waitUntil: 'networkidle' });
+  const cueColumnCount = await narrowPage.locator('.guide-cues').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+  assert(cueColumnCount === 1, `guide cues should use one column at 560px, found ${cueColumnCount}`);
+  await narrowContext.close();
 }
 
 async function verifyInteractionAccessibility(browser) {
@@ -1034,6 +1167,10 @@ async function run() {
     if (localizationOnly) {
       await verifyLocalizedCore(browser);
       process.stdout.write('PASS scalable locale selector, core route parity, and TPMS navigation placement\n');
+      await verifyCustomerJourneyStructure(browser);
+      process.stdout.write('PASS bilingual customer-journey hierarchy and service-directory paths\n');
+      await verifyRepeatedCardAlignment(browser);
+      process.stdout.write('PASS repeated-card height and content-lane alignment\n');
       await verifyGuidePages(browser);
       process.stdout.write('PASS 22 localized service guides, metadata, claims, visuals, and internal links\n');
       await verifyGuideImageRendering(browser);
@@ -1082,6 +1219,12 @@ async function run() {
     await context.close();
     process.stdout.write('PASS exact service inventory and search\n');
     process.stdout.write('PASS internal routes\n');
+
+    await verifyCustomerJourneyStructure(browser);
+    process.stdout.write('PASS bilingual customer-journey hierarchy and service-directory paths\n');
+
+    await verifyRepeatedCardAlignment(browser);
+    process.stdout.write('PASS repeated-card height and content-lane alignment\n');
 
     await verifyInteractionAccessibility(browser);
     process.stdout.write('PASS interaction contrast and dark-section accessibility\n');

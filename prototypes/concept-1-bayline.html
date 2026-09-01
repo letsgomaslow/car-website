@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bayline industrial website concept for Central Auto Repair in Edison, New Jersey.">
+  <title>Bayline Concept — Central Auto Repair</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23ff5b2e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #101312;
+      --ink-2: #1a1e1d;
+      --paper: #f3eee5;
+      --paper-muted: #ded7cc;
+      --steel: #aab2af;
+      --line: rgba(243, 238, 229, 0.2);
+      --orange: #f04b2f;
+      --orange-dark: #a62312;
+      --acid: #d8f04b;
+      --focus: #d8f04b;
+      --display: "Barlow Condensed", "Franklin Gothic Medium", sans-serif;
+      --body: "Manrope", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: var(--body);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      z-index: 100;
+      transform: translateY(-180%);
+      background: var(--acid);
+      color: var(--ink);
+      padding: 11px 16px;
+      font-weight: 800;
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .shell {
+      width: min(1220px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 20;
+      min-height: 84px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--paper);
+      font: 900 17px/1 var(--display);
+      letter-spacing: -0.04em;
+      transform: rotate(-5deg);
+    }
+
+    .brand-name {
+      font: 800 19px/0.9 var(--display);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 5px;
+      color: var(--steel);
+      font: 700 9px/1 var(--body);
+      letter-spacing: 0.16em;
+    }
+
+    .nav-list {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-list a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-list a:hover { color: var(--acid); }
+
+    .header-call {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--orange);
+      color: white;
+      padding: 0 18px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 5px 5px 0 var(--paper);
+    }
+
+    .header-call:hover { background: #ff6348; }
+
+    .menu-button {
+      width: 48px;
+      height: 48px;
+      display: none;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--paper);
+      cursor: pointer;
+    }
+
+    .menu-button span,
+    .menu-button span::before,
+    .menu-button span::after {
+      width: 22px;
+      height: 2px;
+      display: block;
+      background: currentColor;
+    }
+
+    .menu-button span { position: relative; }
+    .menu-button span::before,
+    .menu-button span::after { content: ""; position: absolute; left: 0; }
+    .menu-button span::before { top: -7px; }
+    .menu-button span::after { top: 7px; }
+
+    .hero {
+      min-height: calc(100svh - 84px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(430px, 1.08fr);
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: clamp(74px, 9vw, 132px) clamp(24px, 5vw, 76px) 58px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .kicker {
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--steel);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 46px;
+      height: 4px;
+      background: var(--orange);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font: 900 clamp(68px, 8.7vw, 132px)/0.76 var(--display);
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+
+    h1 em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .hero-summary {
+      max-width: 54ch;
+      margin: 30px 0 0;
+      color: var(--paper-muted);
+      font-size: clamp(15px, 1.5vw, 18px);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 0 22px;
+      border: 1px solid var(--paper);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: var(--paper); color: var(--ink); }
+    .button-primary:hover { background: var(--acid); }
+    .button-secondary:hover { background: var(--orange); border-color: var(--orange); }
+
+    .hero-note {
+      margin: 30px 0 0;
+      color: var(--steel);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 590px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(240, 75, 47, 0.95) 0 6px, transparent 6px),
+        repeating-linear-gradient(90deg, #222725 0 76px, #1a1e1d 76px 152px);
+      border-left: 1px solid var(--line);
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, transparent 0 54%, rgba(240,75,47,0.88) 54.2% 60%, transparent 60.2%),
+        linear-gradient(0deg, rgba(16,19,18,0.2), rgba(16,19,18,0));
+    }
+
+    .bay-frame {
+      position: absolute;
+      inset: clamp(28px, 4vw, 58px);
+      border: 1px solid rgba(243, 238, 229, 0.35);
+    }
+
+    .bay-label {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      display: grid;
+      gap: 4px;
+      font: 700 11px/1 var(--body);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .bay-label span:last-child { color: var(--acid); }
+
+    .car-art {
+      position: absolute;
+      left: 50%;
+      bottom: 15%;
+      width: min(84%, 650px);
+      transform: translateX(-50%);
+      filter: drop-shadow(0 26px 18px rgba(0,0,0,0.45));
+    }
+
+    .metric {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 172px;
+      padding: 18px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .metric span {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 4px;
+      font: 900 30px/1 var(--display);
+      text-transform: uppercase;
+    }
+
+    .quick-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .quick-item {
+      min-height: 104px;
+      padding: 23px 28px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .quick-item:last-child { border-right: 0; }
+    .quick-index { color: var(--orange); font: 900 27px/1 var(--display); }
+
+    .quick-item strong {
+      display: block;
+      font: 700 18px/1.1 var(--display);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .quick-item span:last-child {
+      color: var(--steel);
+      font-size: 11px;
+    }
+
+    .section { padding: clamp(78px, 10vw, 140px) 0; }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(30px, 7vw, 100px);
+      align-items: start;
+      margin-bottom: 52px;
+    }
+
+    .section-heading h2 {
+      max-width: 760px;
+      margin: 0;
+      font: 900 clamp(49px, 6.6vw, 88px)/0.85 var(--display);
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+    }
+
+    .section-heading p:last-child {
+      max-width: 48ch;
+      margin: 8px 0 0;
+      color: var(--paper-muted);
+      line-height: 1.75;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .service {
+      min-height: 210px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      transition: background 180ms ease;
+    }
+
+    .service:hover { background: var(--ink-2); }
+    .service-index { color: var(--orange); font: 800 12px/1 var(--body); }
+
+    .service h3 {
+      margin: auto 0 10px;
+      font: 800 28px/0.95 var(--display);
+      text-transform: uppercase;
+    }
+
+    .service p {
+      margin: 0;
+      color: var(--steel);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tpms {
+      position: relative;
+      overflow: hidden;
+      background: var(--orange);
+      color: white;
+    }
+
+    .tpms::after {
+      content: "TPMS";
+      position: absolute;
+      right: -28px;
+      bottom: -55px;
+      color: rgba(255,255,255,0.11);
+      font: 900 min(24vw, 330px)/0.8 var(--display);
+      letter-spacing: -0.05em;
+    }
+
+    .tpms-layout {
+      position: relative;
+      z-index: 2;
+      min-height: 520px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .tpms h2 {
+      max-width: 760px;
+      margin: 0;
+      font: 900 clamp(60px, 8vw, 116px)/0.78 var(--display);
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+
+    .tpms-copy {
+      padding: 32px;
+      background: white;
+      color: var(--ink);
+      box-shadow: 12px 12px 0 var(--ink);
+    }
+
+    .tpms-copy p { margin: 0 0 22px; line-height: 1.7; }
+    .tpms-copy .button { border-color: var(--ink); }
+    .tpms-copy .button:hover { background: var(--ink); color: white; }
+
+    .process {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .process .section-heading p:last-child { color: #545b57; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: #a8aaa3;
+      border: 1px solid #a8aaa3;
+    }
+
+    .step {
+      min-height: 270px;
+      padding: 30px;
+      background: var(--paper);
+    }
+
+    .step-number {
+      display: inline-grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      background: var(--ink);
+      color: white;
+      font: 800 20px/1 var(--display);
+    }
+
+    .step h3 {
+      margin: 58px 0 12px;
+      font: 800 28px/1 var(--display);
+      text-transform: uppercase;
+    }
+
+    .step p { margin: 0; color: #545b57; font-size: 14px; line-height: 1.7; }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(44px, 8vw, 120px);
+      align-items: end;
+    }
+
+    .contact h2 {
+      margin: 0;
+      font: 900 clamp(62px, 9vw, 128px)/0.76 var(--display);
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+
+    .contact h2 span { color: var(--orange); }
+
+    .contact-panel {
+      border-top: 4px solid var(--orange);
+      padding-top: 24px;
+    }
+
+    .contact-panel p { margin: 0 0 18px; color: var(--paper-muted); line-height: 1.7; }
+    .contact-panel address { margin-bottom: 22px; font-style: normal; font-weight: 700; line-height: 1.6; }
+
+    .site-footer {
+      padding: 28px 0 104px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--steel);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .prototype-note { max-width: 60ch; }
+
+    .mobile-bar { display: none; }
+
+    @media (max-width: 900px) {
+      .shell { width: min(100% - 28px, 1220px); }
+      .site-header { grid-template-columns: 1fr auto; min-height: 70px; }
+      .site-nav {
+        position: absolute;
+        left: -14px;
+        right: -14px;
+        top: 70px;
+        display: none;
+        background: var(--paper);
+        color: var(--ink);
+        border-bottom: 5px solid var(--orange);
+        padding: 18px 14px 26px;
+      }
+      .site-nav[data-open="true"] { display: block; }
+      .nav-list { display: grid; gap: 0; }
+      .nav-list a { min-height: 48px; display: flex; align-items: center; border-bottom: 1px solid #cac6bd; }
+      .header-call { display: none; }
+      .menu-button { display: grid; }
+      .hero { min-height: auto; grid-template-columns: 1fr; }
+      .hero-copy { min-height: 640px; padding: 86px 0 56px; }
+      .hero-visual { min-height: 510px; border-left: 0; border-top: 1px solid var(--line); }
+      .section-heading,
+      .tpms-layout,
+      .contact { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tpms-layout { gap: 40px; padding: 80px 0 100px; }
+    }
+
+    @media (max-width: 620px) {
+      .hero-copy { min-height: auto; padding: 68px 0 46px; }
+      h1 { font-size: clamp(70px, 23vw, 98px); }
+      .hero-actions { display: grid; }
+      .button { width: 100%; }
+      .hero-visual { min-height: 390px; }
+      .quick-strip { grid-template-columns: 1fr; }
+      .quick-item { min-height: 80px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .quick-item:last-child { border-bottom: 0; }
+      .section { padding: 80px 0; }
+      .section-heading { margin-bottom: 34px; }
+      .section-heading h2 { font-size: 58px; }
+      .services-grid,
+      .steps { grid-template-columns: 1fr; }
+      .service { min-height: 180px; }
+      .tpms-layout { min-height: auto; }
+      .tpms h2 { font-size: 72px; }
+      .tpms-copy { padding: 24px; box-shadow: 8px 8px 0 var(--ink); }
+      .contact h2 { font-size: 78px; }
+      .site-footer { padding-bottom: 110px; flex-direction: column; }
+      .mobile-bar {
+        position: fixed;
+        z-index: 50;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 66px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        background: var(--paper);
+        color: var(--ink);
+        box-shadow: 0 -10px 26px rgba(0,0,0,0.28);
+      }
+      .mobile-bar a {
+        min-height: 66px;
+        display: grid;
+        place-items: center;
+        border-right: 1px solid #c5c0b7;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .mobile-bar a:last-child { border-right: 0; background: var(--orange); color: white; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header shell" role="banner">
+    <a class="brand" href="index.html" aria-label="Central Auto Repair concept gallery">
+      <span class="brand-mark" aria-hidden="true">CA</span>
+      <span class="brand-name">Central Auto Repair<small>Edison · New Jersey</small></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation" data-nav>
+      <ul class="nav-list">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#tpms">TPMS</a></li>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#contact">Visit</a></li>
+      </ul>
+    </nav>
+
+    <a class="header-call" href="tel:+17328224534"><span>Call the shop</span><span aria-hidden="true">→</span></a>
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button><span aria-hidden="true"></span></button>
+  </header>
+
+  <main id="main-content">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="kicker">Local auto repair · Route 27</p>
+        <h1 id="hero-title">Back on the road. <em>No runaround.</em></h1>
+        <p class="hero-summary">Maintenance, diagnostics, tire service, brakes, and TPMS programming—explained clearly and handled locally in Edison.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="tel:+17328224534">Call 732-822-4534 <span aria-hidden="true">→</span></a>
+          <a class="button button-secondary" href="https://maps.app.goo.gl/t21LbtrQwbwPVivV6">Get directions</a>
+        </div>
+        <p class="hero-note">82 Lincoln Hwy, Edison, NJ 08820 · Phone shown from the current Google Maps listing.</p>
+      </div>
+
+      <div class="hero-visual" aria-label="Stylized illustration of a vehicle inside a service bay">
+        <div class="bay-frame">
+          <div class="bay-label"><span>Bay 01 / Edison</span><span>Ready for inspection</span></div>
+          <svg class="car-art" viewBox="0 0 700 270" role="img" aria-label="Side profile illustration of a car on a service floor">
+            <path d="M81 179 112 171 171 99c12-15 29-24 48-25l217-6c24-1 47 8 63 25l62 63 72 17c18 4 30 20 30 38v13H44v-13c0-17 16-30 37-32Z" fill="#f3eee5"/>
+            <path d="m204 101 221-6c14 0 28 5 38 15l39 41H160l35-43c2-3 5-5 9-7Z" fill="#1a1e1d"/>
+            <path d="M336 96v56M147 180h377" stroke="#f04b2f" stroke-width="7"/>
+            <circle cx="175" cy="210" r="47" fill="#101312" stroke="#f3eee5" stroke-width="14"/>
+            <circle cx="527" cy="210" r="47" fill="#101312" stroke="#f3eee5" stroke-width="14"/>
+            <circle cx="175" cy="210" r="16" fill="#f04b2f"/>
+            <circle cx="527" cy="210" r="16" fill="#f04b2f"/>
+          </svg>
+          <div class="metric"><span>Highlighted service</span><strong>TPMS</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-strip shell" aria-label="Quick business information">
+      <div class="quick-item"><span class="quick-index">01</span><span><strong>Call first</strong><span>Talk directly with the shop</span></span></div>
+      <div class="quick-item"><span class="quick-index">02</span><span><strong>Explain the issue</strong><span>Start with what you hear, see, or feel</span></span></div>
+      <div class="quick-item"><span class="quick-index">03</span><span><strong>Approve the work</strong><span>Recommended production message—verify process</span></span></div>
+    </section>
+
+    <section class="section shell" id="services" aria-labelledby="services-title">
+      <div class="section-heading">
+        <p class="kicker">Service menu / no guesswork</p>
+        <div>
+          <h2 id="services-title">The work your car is asking for.</h2>
+          <p>Lead with recognizable problems and plain-English outcomes. Final service scope should be approved by the shop before launch.</p>
+        </div>
+      </div>
+
+      <div class="services-grid">
+        <article class="service"><span class="service-index">01</span><h3>Oil & maintenance</h3><p>Routine care that helps keep small issues from becoming expensive repairs.</p></article>
+        <article class="service"><span class="service-index">02</span><h3>Engine diagnostics</h3><p>For warning lights, rough running, unusual sounds, and lost performance.</p></article>
+        <article class="service"><span class="service-index">03</span><h3>Brake repair</h3><p>Inspection and service for squealing, vibration, soft pedals, and worn components.</p></article>
+        <article class="service"><span class="service-index">04</span><h3>Tire service</h3><p>Rotation, balancing, repair, and related tire care—exact scope to be confirmed.</p></article>
+        <article class="service"><span class="service-index">05</span><h3>Steering & suspension</h3><p>Restore control and comfort when the ride feels loose, noisy, or uneven.</p></article>
+        <article class="service"><span class="service-index">06</span><h3>Heating & AC</h3><p>Diagnosis and repair when airflow, heating, or cooling is not doing its job.</p></article>
+        <article class="service"><span class="service-index">07</span><h3>Cooling systems</h3><p>Help address overheating, coolant leaks, and temperature-control problems.</p></article>
+        <article class="service"><span class="service-index">08</span><h3>Electrical systems</h3><p>Testing and repair for starting, charging, lighting, and electrical faults.</p></article>
+        <article class="service"><span class="service-index">09</span><h3>Exhaust repair</h3><p>For loud exhaust, leaks, odors, and damaged exhaust-system components.</p></article>
+      </div>
+    </section>
+
+    <section class="tpms" id="tpms" aria-labelledby="tpms-title">
+      <div class="tpms-layout shell">
+        <div>
+          <p class="kicker">A service worth finding</p>
+          <h2 id="tpms-title">That tire light is trying to tell you something.</h2>
+        </div>
+        <div class="tpms-copy">
+          <p>Give TPMS programming and relearn its own destination instead of burying it in a generic tire list. Production copy should explain supported vehicles, sensor replacement, customer-supplied sensors, timing, and appointment requirements.</p>
+          <a class="button" href="#contact">Ask about TPMS <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section process" id="process" aria-labelledby="process-title">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="kicker">Three clear moves</p>
+          <div>
+            <h2 id="process-title">Car repair should not feel mysterious.</h2>
+            <p>A short, believable plan reduces anxiety more effectively than a wall of generic quality claims.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <article class="step"><span class="step-number">1</span><h3>Tell us what is happening</h3><p>Call or send a short request. Start with the symptom, warning light, sound, or service you need.</p></article>
+          <article class="step"><span class="step-number">2</span><h3>Get an explanation</h3><p>The shop inspects the vehicle and explains the recommended work in practical terms.</p></article>
+          <article class="step"><span class="step-number">3</span><h3>Approve the repair</h3><p>Work begins after the scope is understood and approved. Confirm this operating promise before launch.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell contact" id="contact" aria-labelledby="contact-title">
+      <div>
+        <p class="kicker">82 Lincoln Highway / Edison</p>
+        <h2 id="contact-title">Bring us the <span>problem.</span></h2>
+      </div>
+      <div class="contact-panel">
+        <p>This concept treats the phone as the primary conversion. A short request form can be added after the client confirms who monitors it and how quickly customers receive a response.</p>
+        <address>Central Auto Repair<br>82 Lincoln Hwy<br>Edison, NJ 08820</address>
+        <div class="hero-actions">
+          <a class="button button-primary" href="tel:+17328224534">Call the shop</a>
+          <a class="button button-secondary" href="https://maps.app.goo.gl/t21LbtrQwbwPVivV6">Directions</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell" role="contentinfo">
+    <span>Concept 01 / Bayline</span>
+    <span class="prototype-note">Prototype only. Content, primary phone, business identity, hours, process, and service details require owner approval before production.</span>
+  </footer>
+
+  <nav class="mobile-bar" aria-label="Quick actions">
+    <a href="tel:+17328224534">Call</a>
+    <a href="https://maps.app.goo.gl/t21LbtrQwbwPVivV6">Directions</a>
+    <a href="#contact">Request</a>
+  </nav>
+
+  <script>
+    const menuButton = document.querySelector('[data-menu-button]');
+    const nav = document.querySelector('[data-nav]');
+
+    function closeMenu() {
+      nav.dataset.open = 'false';
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Open navigation');
+    }
+
+    menuButton.addEventListener('click', () => {
+      const nextOpen = nav.dataset.open !== 'true';
+      nav.dataset.open = String(nextOpen);
+      menuButton.setAttribute('aria-expanded', String(nextOpen));
+      menuButton.setAttribute('aria-label', nextOpen ? 'Close navigation' : 'Open navigation');
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target.matches('a')) closeMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.dataset.open === 'true') {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+  </script>
+</body>
+</html>

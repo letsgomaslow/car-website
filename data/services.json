@@ -1,0 +1,99 @@
+{
+  "verifiedAt": "2026-08-31",
+  "source": {
+    "referenceBusiness": "BC Tire & Complete Auto Service",
+    "catalog": "https://www.bctire.net/sitemap.xml",
+    "clientListing": "https://maps.app.goo.gl/t21LbtrQwbwPVivV6",
+    "clientDirection": "Central offers the reference catalog except the explicit exclusions, and also offers TPMS programming."
+  },
+  "publishedItemCount": 89,
+  "categories": [
+    {
+      "name": "TPMS Programming",
+      "items": ["TPMS Programming"]
+    },
+    {
+      "name": "Preventive Maintenance",
+      "items": ["7,500 Mile Service", "15,000 Mile Service", "22,500 Mile Service", "30,000 Mile Service", "37,500 Mile Service", "45,000 Mile Service", "52,500 Mile Service", "60,000 Mile Service", "67,500 Mile Service", "75,000 Mile Service", "82,500 Mile Service", "90,000 Mile Service", "97,500 Mile Service", "105,000 Mile Service", "112,500 Mile Service", "120,000 Mile Service", "127,500 Mile Service", "135,000 Mile Service", "142,000 Mile Service", "150,000 Mile Service", "157,500 Mile Service", "172,500 Mile Service", "180,000 Mile Service", "Wiper Blades Replacement", "Air Filter Replacement", "Winterization Checkup", "Spring Checkup", "Oil and Filter Change", "Fuel Injection"]
+    },
+    {
+      "name": "Lube, Oil & Filter Change",
+      "items": ["Lube and Oil Change"]
+    },
+    {
+      "name": "Brake Repair",
+      "items": ["Brake Inspection", "Brake Rotor Replacement", "Front Disc Brake Repair", "Parking Brake Adjustment", "Rear Disc Brake Repair", "Rear Drum Brake Repair"]
+    },
+    {
+      "name": "Tire Services",
+      "items": ["Computerized Wheel Balancing", "Tire Purchase & Tire Installation", "Tire Rotation"]
+    },
+    {
+      "name": "Wheel Services",
+      "items": ["Wheel Purchase & Wheel Installation"]
+    },
+    {
+      "name": "Engine Diagnostics and Performance",
+      "items": ["Engine Diagnostics", "Engine Tune-Up"]
+    },
+    {
+      "name": "Electrical & Electronic Systems",
+      "items": ["Dashboard Warning Diagnostic", "Headlight Bulb Replacement", "Interior & Exterior Lighting Repair", "Power Locks Repair", "Power Window Repair"]
+    },
+    {
+      "name": "Starting, Charging & Batteries",
+      "items": ["Alternator Replacement", "Battery Replacement", "Starter Replacement", "Starting & Charging System Check"]
+    },
+    {
+      "name": "Climate Control Systems",
+      "items": ["Air Conditioning System Diagnostic", "Air Conditioning System Service", "Heating System Diagnostic", "Heating System Service"]
+    },
+    {
+      "name": "Cooling System Repair",
+      "items": ["Cooling System Flush and Fill", "Cooling System Pressure Test", "Replace Radiator"]
+    },
+    {
+      "name": "Steering and Suspension System",
+      "items": ["Ball Joint Replacement", "Inner Tie Rod & Outer Tie Rod Replacement", "Shocks Replacement", "Struts Replacement", "Suspension Inspection", "Sway Bar Link Replacement"]
+    },
+    {
+      "name": "Belts & Hoses",
+      "items": ["Heater Hose Replacement", "Radiator Hose Replacement", "Serpentine Belt Replacement", "Timing Belt Replacement"]
+    },
+    {
+      "name": "Axle, CV Joint & Driveshaft Repair",
+      "items": ["CV Axle Inspection", "CV Axle Replacement", "CV Boot Replacement", "CV Joint Replacement", "U-Joint Replacement", "Yoke Replacement"]
+    },
+    {
+      "name": "Transmission Repair",
+      "items": ["Automatic Transmission Repair", "Clutch Adjustment and Inspection", "Clutch Replacement", "Manual Transmission Repair", "Transmission Replacement"]
+    },
+    {
+      "name": "Exhaust System Repair",
+      "items": ["Catalytic Converter Replacement", "Center Exhaust Section Replacement", "Downpipe Replacement", "Exhaust Inspection", "Manifold Replacement", "Muffler Replacement"]
+    },
+    {
+      "name": "Vehicle Inspection",
+      "items": ["Emissions Inspection", "Insurance Inspection", "Safety Inspection"]
+    }
+  ],
+  "excluded": [
+    {
+      "name": "Wheel Alignment",
+      "items": ["Four-Wheel Alignment", "Two-Wheel Alignment"]
+    },
+    {
+      "name": "Auto Glass",
+      "items": ["Glass Replacement"]
+    },
+    {
+      "name": "WeatherTech Products",
+      "items": []
+    }
+  ],
+  "notPublishedPendingConfirmation": [
+    "Commercial fleet service as a distinct offering",
+    "Customer-supplied TPMS sensor compatibility",
+    "TPMS sensor replacement"
+  ]
+}

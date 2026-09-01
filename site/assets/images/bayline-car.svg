@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
+  <title id="title">Car profile illustration</title>
+  <desc id="desc">A clean side-profile drawing of a car inside a service bay.</desc>
+  <g fill="none" stroke="#F5F0E7" stroke-linecap="square" stroke-linejoin="miter">
+    <path stroke-width="26" d="M86 235h48l50-76c18-27 45-44 77-48l236-25c32-4 65 7 87 31l67 71 105 28c26 7 44 30 44 57v13H73v-22c0-16 6-23 13-29Z"/>
+    <path stroke="#F45131" stroke-width="8" d="M234 160h354M620 188l-18 98M352 115l-45 91M760 236H649"/>
+    <path stroke-width="12" d="m268 166 56-69 171-18c26-3 49 5 67 22l60 65H268Z"/>
+    <circle cx="225" cy="277" r="59" fill="#0D1110" stroke-width="20"/>
+    <circle cx="225" cy="277" r="19" fill="#F45131" stroke="none"/>
+    <circle cx="668" cy="277" r="59" fill="#0D1110" stroke-width="20"/>
+    <circle cx="668" cy="277" r="19" fill="#F45131" stroke="none"/>
+  </g>
+</svg>

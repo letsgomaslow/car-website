@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Tire pressure sensor symbol</title>
+  <desc id="desc">A gauge-inspired symbol representing tire pressure monitoring service.</desc>
+  <circle cx="160" cy="160" r="138" fill="#0D1110"/>
+  <circle cx="160" cy="160" r="101" fill="#F5F0E7" stroke="#F45131" stroke-width="12"/>
+  <path d="M160 160 220 99" fill="none" stroke="#F45131" stroke-width="16" stroke-linecap="square"/>
+  <circle cx="160" cy="160" r="18" fill="#F45131"/>
+  <path d="M94 216h132" fill="none" stroke="#0D1110" stroke-width="11"/>
+  <path d="M106 242h28v12h-28zm40 0h28v12h-28zm40 0h28v12h-28z" fill="#0D1110"/>
+</svg>

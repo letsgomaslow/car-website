@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Signal concept prototype for Central Auto Repair in Edison, New Jersey.">
+  <title>Signal Concept — Central Auto Repair</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23f4c83f'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f1f3eb;
+      --paper-2: #e6eadd;
+      --ink: #101a35;
+      --blue: #173c87;
+      --blue-dark: #0d285f;
+      --yellow: #f4c83f;
+      --red: #d94c34;
+      --line: #b9c1b2;
+      --white: #fffef8;
+      --shadow: 0 18px 50px rgba(16, 26, 53, .12);
+      --display: "Space Grotesk", "Trebuchet MS", sans-serif;
+      --body: "Outfit", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(23, 60, 135, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 60, 135, .045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 36px 36px;
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 12px;
+      left: 12px;
+      padding: 10px 14px;
+      background: var(--white);
+      color: var(--ink);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .prototype-note {
+      padding: 7px 5vw;
+      background: var(--ink);
+      color: var(--white);
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: stretch;
+      min-height: 76px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(241, 243, 235, .96);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 24px;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--yellow);
+      font-family: var(--display);
+      font-weight: 700;
+    }
+    .brand-name { display: grid; line-height: 1; }
+    .brand-name strong { font-family: var(--display); font-size: 1rem; letter-spacing: -.03em; }
+    .brand-name span { margin-top: 5px; color: #4c566c; font-size: .7rem; letter-spacing: .11em; text-transform: uppercase; }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      padding: 10px 18px;
+    }
+    .site-nav a {
+      padding: 10px 12px;
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .site-nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .header-call {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: var(--blue);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .header-call:hover { background: var(--blue-dark); }
+
+    .menu-button {
+      display: none;
+      width: 48px;
+      height: 48px;
+      align-self: center;
+      margin-right: 14px;
+      border: 2px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    main { overflow: hidden; }
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(340px, .72fr);
+      min-height: 690px;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(70px, 8vw, 132px) clamp(28px, 7vw, 104px);
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 24px;
+      color: var(--blue);
+      font-family: var(--display);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 38px; height: 4px; background: var(--red); content: ""; }
+    h1, h2, h3 { margin-top: 0; font-family: var(--display); line-height: .98; letter-spacing: -.055em; }
+    h1 { max-width: 780px; margin-bottom: 28px; font-size: clamp(4.3rem, 9vw, 8.8rem); }
+    h1 span {
+      position: relative;
+      display: inline-block;
+      color: var(--blue);
+    }
+    h1 span::after {
+      position: absolute;
+      z-index: -1;
+      right: -3%;
+      bottom: .08em;
+      left: -2%;
+      height: .16em;
+      background: var(--yellow);
+      content: "";
+      transform: rotate(-1deg);
+    }
+    .hero-lede { max-width: 650px; margin: 0 0 32px; color: #424d64; font-size: clamp(1.08rem, 1.8vw, 1.32rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .button:hover { box-shadow: 5px 5px 0 var(--yellow); transform: translate(-2px, -2px); }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button.secondary:hover { box-shadow: 5px 5px 0 var(--blue); }
+
+    .signal-panel {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(40px, 5vw, 78px);
+      overflow: hidden;
+      background: var(--blue);
+      color: var(--white);
+    }
+    .signal-panel::before {
+      position: absolute;
+      top: -150px;
+      right: -160px;
+      width: 470px;
+      height: 470px;
+      border: 70px solid rgba(244, 200, 63, .11);
+      border-radius: 50%;
+      content: "";
+    }
+    .panel-kicker { position: relative; margin: 0 0 12px; color: #cdd7ef; font-size: .8rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .signal-panel h2 { position: relative; max-width: 430px; margin-bottom: 12px; font-size: clamp(2rem, 3.8vw, 3.8rem); }
+    .signal-panel > p:not(.panel-kicker) { position: relative; max-width: 450px; margin: 0 0 26px; color: #d5def3; }
+    .symptoms { position: relative; display: grid; gap: 9px; }
+    .symptom-button {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      align-items: center;
+      gap: 13px;
+      min-height: 52px;
+      padding: 12px 15px;
+      border: 1px solid rgba(255,255,255,.38);
+      background: rgba(255,255,255,.05);
+      color: var(--white);
+      cursor: pointer;
+      text-align: left;
+    }
+    .symptom-button:hover, .symptom-button[aria-pressed="true"] { border-color: var(--yellow); background: var(--yellow); color: var(--ink); }
+    .signal-dot { width: 12px; height: 12px; border: 2px solid currentColor; border-radius: 50%; }
+    .symptom-button[aria-pressed="true"] .signal-dot { background: var(--red); box-shadow: 0 0 0 3px rgba(217,76,52,.25); }
+    .symptom-arrow { font-size: 1.2rem; }
+    .signal-result {
+      position: relative;
+      min-height: 110px;
+      margin-top: 16px;
+      padding: 16px;
+      border-left: 5px solid var(--yellow);
+      background: var(--white);
+      color: var(--ink);
+    }
+    .signal-result strong { display: block; margin-bottom: 3px; color: var(--blue); font-family: var(--display); font-size: 1.05rem; }
+    .signal-result p { margin: 0; font-size: .92rem; }
+
+    .status-rail {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+    .status-item { min-width: 0; padding: 22px clamp(24px, 4vw, 60px); border-right: 1px solid var(--line); }
+    .status-item:last-child { border-right: 0; }
+    .status-label { display: block; margin-bottom: 4px; color: #667066; font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .status-item strong { font-family: var(--display); font-size: 1.05rem; }
+
+    .section { padding: clamp(76px, 10vw, 144px) clamp(24px, 7vw, 104px); }
+    .section-heading { display: grid; grid-template-columns: minmax(0, .7fr) minmax(300px, .3fr); gap: 50px; align-items: end; margin-bottom: 52px; }
+    .section-heading h2 { max-width: 780px; margin: 0; font-size: clamp(3rem, 6vw, 6.2rem); }
+    .section-heading p { margin: 0; color: #515d58; }
+
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); border-left: 1px solid var(--line); }
+    .service-card {
+      position: relative;
+      min-height: 220px;
+      padding: 28px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 254, 248, .7);
+    }
+    .service-card::after { position: absolute; right: 18px; bottom: 14px; color: #879187; font-family: var(--display); font-size: .72rem; content: attr(data-code); }
+    .service-card h3 { margin-bottom: 13px; font-size: 1.6rem; letter-spacing: -.04em; }
+    .service-card p { margin: 0; color: #515d58; font-size: .94rem; }
+    .service-card.featured { background: var(--yellow); }
+    .service-card.featured p { color: var(--ink); }
+
+    .tpms {
+      position: relative;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      min-height: 640px;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .tpms-visual {
+      position: relative;
+      display: grid;
+      min-height: 500px;
+      place-items: center;
+      overflow: hidden;
+      background: var(--yellow);
+      color: var(--ink);
+    }
+    .tpms-visual::before, .tpms-visual::after {
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border: 2px solid rgba(16,26,53,.25);
+      border-radius: 50%;
+      content: "";
+    }
+    .tpms-visual::after { width: 450px; height: 450px; border-style: dashed; animation: rotate 25s linear infinite; }
+    .gauge { position: relative; z-index: 2; display: grid; width: min(60%, 270px); aspect-ratio: 1; place-items: center; border: 24px solid var(--ink); border-radius: 50%; box-shadow: 0 0 0 10px rgba(16,26,53,.18); }
+    .gauge::before { position: absolute; top: 14%; width: 10px; height: 38%; background: var(--red); content: ""; transform: rotate(36deg); transform-origin: 50% 100%; }
+    .gauge::after { position: absolute; width: 24px; height: 24px; border-radius: 50%; background: var(--red); content: ""; }
+    .gauge span { margin-top: 60%; font-family: var(--display); font-size: .85rem; font-weight: 700; letter-spacing: .12em; }
+    .tpms-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(60px, 8vw, 120px); }
+    .tpms-copy .eyebrow { color: var(--yellow); }
+    .tpms-copy h2 { max-width: 750px; margin-bottom: 24px; font-size: clamp(3.4rem, 7vw, 7rem); }
+    .tpms-copy > p { max-width: 680px; margin: 0 0 28px; color: #cbd2e0; font-size: 1.08rem; }
+    .tpms-points { display: grid; gap: 10px; margin: 0 0 36px; padding: 0; list-style: none; }
+    .tpms-points li { display: flex; gap: 10px; align-items: flex-start; }
+    .tpms-points li::before { color: var(--yellow); content: "●"; }
+    .tpms-copy .button { align-self: flex-start; border-color: var(--yellow); background: var(--yellow); color: var(--ink); }
+
+    .process { background: var(--paper-2); }
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .process-step { position: relative; padding: 34px 28px 30px; border-top: 5px solid var(--blue); background: var(--white); box-shadow: var(--shadow); }
+    .step-number { display: block; margin-bottom: 30px; color: var(--red); font-family: var(--display); font-size: 3rem; line-height: 1; }
+    .process-step h3 { margin-bottom: 12px; font-size: 1.55rem; }
+    .process-step p { margin: 0; color: #515d58; }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 50px;
+      align-items: center;
+      background: var(--blue);
+      color: var(--white);
+    }
+    .contact h2 { max-width: 820px; margin-bottom: 18px; font-size: clamp(3rem, 6vw, 6rem); }
+    .contact p { max-width: 650px; margin: 0; color: #d7dff1; }
+    .contact-actions { display: grid; gap: 12px; min-width: 270px; }
+    .contact .button { border-color: var(--yellow); background: var(--yellow); color: var(--ink); }
+    .contact .button.secondary { border-color: var(--white); background: transparent; color: var(--white); }
+
+    footer { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 28px 5vw 88px; background: var(--ink); color: #bcc4d3; font-size: .84rem; }
+    footer a { color: var(--white); }
+    .mobile-actions { display: none; }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    @media (max-width: 980px) {
+      .site-header { grid-template-columns: 1fr auto; }
+      .site-nav {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        display: none;
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px 20px 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .site-nav.open { display: flex; }
+      .site-nav a { min-height: 48px; }
+      .header-call { display: none; }
+      .menu-button { display: block; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { min-height: 570px; }
+      .signal-panel { min-height: 650px; }
+      .section-heading, .tpms, .contact { grid-template-columns: 1fr; }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .tpms-copy { order: -1; }
+      .process-grid { grid-template-columns: 1fr; }
+      .contact-actions { min-width: 0; }
+    }
+
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      .prototype-note { padding: 7px 14px; font-size: .66rem; }
+      .site-header { min-height: 66px; }
+      .brand { padding: 9px 14px; }
+      .brand-mark { width: 38px; height: 38px; }
+      .brand-name strong { font-size: .9rem; }
+      .hero-copy { min-height: 520px; padding: 70px 24px; }
+      h1 { font-size: clamp(3.65rem, 19vw, 5.3rem); }
+      .hero-actions { display: grid; }
+      .button { width: 100%; }
+      .signal-panel { min-height: 0; padding: 64px 24px; }
+      .status-rail { grid-template-columns: 1fr; }
+      .status-item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .status-item:last-child { border-bottom: 0; }
+      .section { padding: 78px 24px; }
+      .section-heading { grid-template-columns: 1fr; gap: 18px; margin-bottom: 34px; }
+      .section-heading h2 { font-size: 3.4rem; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: 180px; }
+      .tpms-copy { padding: 76px 24px; }
+      .tpms-copy h2 { font-size: 4rem; }
+      .tpms-visual { min-height: 420px; }
+      .gauge { width: 210px; }
+      .contact { padding-bottom: 110px; }
+      footer { grid-template-columns: 1fr; padding-bottom: 105px; }
+      .mobile-actions {
+        position: fixed;
+        z-index: 50;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 2px solid var(--ink);
+        background: var(--white);
+      }
+      .mobile-actions a { display: grid; min-height: 58px; place-items: center; font-weight: 700; text-decoration: none; }
+      .mobile-actions a:first-child { background: var(--yellow); }
+      .mobile-actions a:last-child { background: var(--blue); color: var(--white); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="prototype-note">Concept prototype — final services, hours, and business details require client approval</div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Central Auto Repair concepts home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span class="brand-name"><strong>Central Auto Repair</strong><span>Edison, New Jersey</span></span>
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="#services">Services</a>
+      <a href="#tpms">TPMS</a>
+      <a href="#process">What to expect</a>
+      <a href="#contact">Visit</a>
+      <a href="index.html">View concepts</a>
+    </nav>
+    <a class="header-call" href="tel:+17328224534" aria-label="Call Central Auto Repair at 732 822 4534">Call 732-822-4534</a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-copy">
+        <p class="eyebrow">Clear answers for the road ahead</p>
+        <h1 id="hero-heading">Start with the <span>signal.</span></h1>
+        <p class="hero-lede">A service-first experience built around what drivers actually notice: a warning light, a new noise, an uneven ride, or a car that simply feels off.</p>
+        <div class="hero-actions">
+          <a class="button" href="tel:+17328224534">Call the shop</a>
+          <a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Get directions</a>
+        </div>
+      </div>
+
+      <div class="signal-panel" aria-labelledby="symptom-heading">
+        <p class="panel-kicker">Quick service guide</p>
+        <h2 id="symptom-heading">What is your car telling you?</h2>
+        <p>Select a symptom to see where a technician might begin. This guide is informational—not a diagnosis.</p>
+        <div class="symptoms" role="group" aria-label="Common vehicle symptoms">
+          <button class="symptom-button" type="button" aria-pressed="true" data-title="Tire pressure warning" data-result="We can inspect tire pressure and sensors, then program or relearn compatible TPMS sensors when needed.">
+            <span class="signal-dot" aria-hidden="true"></span><span>Tire pressure light</span><span class="symptom-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="symptom-button" type="button" aria-pressed="false" data-title="Brake inspection" data-result="A brake inspection can help identify wear, vibration, pulling, or unusual noise before repair is recommended.">
+            <span class="signal-dot" aria-hidden="true"></span><span>Brake noise or vibration</span><span class="symptom-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="symptom-button" type="button" aria-pressed="false" data-title="Engine diagnostics" data-result="Diagnostic testing helps narrow down the systems behind a check-engine light or drivability concern.">
+            <span class="signal-dot" aria-hidden="true"></span><span>Check-engine light</span><span class="symptom-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="symptom-button" type="button" aria-pressed="false" data-title="Cooling system check" data-result="Running hot can involve coolant, leaks, fans, hoses, or other components. Stop safely and call if the gauge enters the danger zone.">
+            <span class="signal-dot" aria-hidden="true"></span><span>Running hot</span><span class="symptom-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="signal-result" aria-live="polite">
+          <strong id="result-title">Tire pressure warning</strong>
+          <p id="result-copy">We can inspect tire pressure and sensors, then program or relearn compatible TPMS sensors when needed.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="status-rail" aria-label="Shop quick information">
+      <div class="status-item"><span class="status-label">Location</span><strong>82 Lincoln Highway, Edison</strong></div>
+      <div class="status-item"><span class="status-label">Specialty spotlight</span><strong>TPMS programming &amp; relearn</strong></div>
+      <div class="status-item"><span class="status-label">Best next step</span><strong>Call before your visit</strong></div>
+    </div>
+
+    <section class="section" id="services" aria-labelledby="services-heading">
+      <div class="section-heading">
+        <h2 id="services-heading">Service without the guesswork.</h2>
+        <p>The site groups services by driver need, with plain-language descriptions and a clear path to call the shop.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card featured" data-code="01 / SENSOR"><h3>TPMS service</h3><p>Sensor checks, compatible sensor programming, and relearn support when the tire-pressure light stays on.</p></article>
+        <article class="service-card" data-code="02 / STOP"><h3>Brakes</h3><p>Inspection and repair for wear, noise, vibration, pulling, or reduced stopping confidence.</p></article>
+        <article class="service-card" data-code="03 / ENGINE"><h3>Diagnostics</h3><p>Testing to narrow down warning lights, performance changes, rough running, and electrical concerns.</p></article>
+        <article class="service-card" data-code="04 / TIRE"><h3>Tire service</h3><p>Tire repair, rotation, balancing, and replacement guidance for everyday road use.</p></article>
+        <article class="service-card" data-code="05 / RIDE"><h3>Steering &amp; suspension</h3><p>Inspection for clunks, vibration, pulling, uneven tire wear, and changes in ride quality.</p></article>
+        <article class="service-card" data-code="06 / CLIMATE"><h3>Heating &amp; A/C</h3><p>Checks for weak airflow, temperature problems, and heating or cooling performance.</p></article>
+        <article class="service-card" data-code="07 / ROUTINE"><h3>Oil &amp; maintenance</h3><p>Routine oil service and maintenance checks based on vehicle condition and manufacturer guidance.</p></article>
+        <article class="service-card" data-code="08 / TEMP"><h3>Cooling system</h3><p>Inspection of leaks, overheating concerns, hoses, coolant condition, and related components.</p></article>
+        <article class="service-card" data-code="09 / EXHAUST"><h3>Exhaust</h3><p>Inspection for noise, leaks, damaged components, and other exhaust-system concerns.</p></article>
+      </div>
+    </section>
+
+    <section class="tpms" id="tpms" aria-labelledby="tpms-heading">
+      <div class="tpms-visual" aria-hidden="true">
+        <div class="gauge"><span>SENSOR / PSI</span></div>
+      </div>
+      <div class="tpms-copy">
+        <p class="eyebrow">A local point of difference</p>
+        <h2 id="tpms-heading">That light deserves a real answer.</h2>
+        <p>A focused TPMS page makes an often-confusing service easy to understand—and gives Central Auto Repair a specific, useful reason to stand apart in local search.</p>
+        <ul class="tpms-points">
+          <li>Pressure and sensor checks</li>
+          <li>Compatible sensor programming</li>
+          <li>Sensor relearn support</li>
+        </ul>
+        <a class="button" href="tel:+17328224534">Ask about TPMS service</a>
+      </div>
+    </section>
+
+    <section class="section process" id="process" aria-labelledby="process-heading">
+      <div class="section-heading">
+        <h2 id="process-heading">A simpler path to service.</h2>
+        <p>These steps are intentionally modest until the client confirms their exact intake and authorization process.</p>
+      </div>
+      <div class="process-grid">
+        <article class="process-step"><span class="step-number" aria-hidden="true">01</span><h3>Tell us what changed</h3><p>Share the light, sound, smell, vibration, or maintenance need you noticed.</p></article>
+        <article class="process-step"><span class="step-number" aria-hidden="true">02</span><h3>Start with inspection</h3><p>The team checks the concern and identifies the appropriate next step.</p></article>
+        <article class="process-step"><span class="step-number" aria-hidden="true">03</span><h3>Discuss the work</h3><p>Confirm the recommended service before repairs move forward.</p></article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div>
+        <p class="eyebrow">Central Auto Repair · Edison, NJ</p>
+        <h2 id="contact-heading">Bring the signal. Leave with a next step.</h2>
+        <p>Located at 82 Lincoln Highway in Edison. Call before visiting to confirm availability, service fit, and current hours.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="button" href="tel:+17328224534">732-822-4534</a>
+        <a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Open in Google Maps</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Signal concept for Central Auto Repair</span>
+    <span>Prototype copy is not a final claim of services, hours, pricing, or availability. <a href="index.html">View all concepts</a></span>
+  </footer>
+
+  <nav class="mobile-actions" aria-label="Mobile quick actions">
+    <a href="tel:+17328224534">Call now</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Directions</a>
+  </nav>
+
+  <script>
+    const menuButton = document.querySelector('.menu-button');
+    const navigation = document.querySelector('.site-nav');
+    const symptomButtons = document.querySelectorAll('.symptom-button');
+    const resultTitle = document.querySelector('#result-title');
+    const resultCopy = document.querySelector('#result-copy');
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!isOpen));
+      navigation.classList.toggle('open', !isOpen);
+      menuButton.textContent = isOpen ? 'Menu' : 'Close';
+    });
+
+    navigation.addEventListener('click', (event) => {
+      if (event.target.matches('a')) {
+        menuButton.setAttribute('aria-expanded', 'false');
+        navigation.classList.remove('open');
+        menuButton.textContent = 'Menu';
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && navigation.classList.contains('open')) {
+        navigation.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.textContent = 'Menu';
+        menuButton.focus();
+      }
+    });
+
+    symptomButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        symptomButtons.forEach((item) => item.setAttribute('aria-pressed', 'false'));
+        button.setAttribute('aria-pressed', 'true');
+        resultTitle.textContent = button.dataset.title;
+        resultCopy.textContent = button.dataset.result;
+      });
+    });
+  </script>
+</body>
+</html>

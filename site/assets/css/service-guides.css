@@ -57,6 +57,7 @@
 }
 
 .guide-cue h3 {
+  min-block-size: 3.15em;
   margin: 0;
   font-size: clamp(1.45rem, 2.1vw, 2rem);
   font-weight: 800;
@@ -278,6 +279,10 @@
   color: var(--steel);
 }
 
+.guide-related .service-preview-card h3 {
+  min-block-size: 2.1em;
+}
+
 .guide-page .cta-band {
   border-top: 1px solid var(--line);
 }
@@ -305,6 +310,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .guide-cue h3 {
+    min-block-size: 2.1em;
+  }
+
   .guide-system__grid,
   .guide-prepare__grid {
     grid-template-columns: 1fr;
@@ -329,8 +338,16 @@
     font-size: clamp(3.05rem, 14.4vw, 5.2rem);
   }
 
+  .guide-cues {
+    grid-template-columns: 1fr;
+  }
+
   .guide-cue {
     min-height: 270px;
+  }
+
+  .guide-cue h3 {
+    min-block-size: 0;
   }
 
   .guide-cue > span {

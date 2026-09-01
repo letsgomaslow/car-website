@@ -844,8 +844,10 @@ p {
 .quick-rail__number {
   color: var(--orange-dark);
   font-family: var(--display);
-  font-size: 1.75rem;
+  font-size: clamp(.9rem, 1.35vw, 1.2rem);
   font-weight: 900;
+  letter-spacing: .06em;
+  white-space: nowrap;
 }
 
 .quick-rail__item strong {
@@ -961,6 +963,32 @@ p {
   font-size: 0.86rem;
 }
 
+.service-preview-card__action {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--orange-bright);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.service-preview-card__action::after {
+  margin-left: 8px;
+  content: "↗";
+}
+
+.service-preview-card:hover .service-preview-card__action,
+.service-preview-card:focus-visible .service-preview-card__action,
+.section--paper .service-preview-card__action {
+  color: var(--orange-dark);
+}
+
+.service-preview-card--accent .service-preview-card__action {
+  color: var(--ink);
+}
+
 .service-preview-card:hover p,
 .service-preview-card:focus-visible p {
   color: #414844;
@@ -1002,10 +1030,101 @@ p {
 
 .symptom-entry__grid {
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
 }
 
 .symptom-entry .service-preview-card {
-  min-height: 245px;
+  min-height: 320px;
+}
+
+.symptom-entry .service-preview-card h3 {
+  min-block-size: 2.1em;
+}
+
+.symptom-entry .service-preview-card p {
+  min-block-size: 4.95em;
+}
+
+.service-link-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.service-link-list a {
+  min-height: 116px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--paper);
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, transform 100ms ease;
+}
+
+.service-link-list a:hover,
+.service-link-list a:focus-visible {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+.service-link-list a:active {
+  transform: scale(.992);
+}
+
+.service-link-list span {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.service-link-list small {
+  margin-top: 18px;
+  color: var(--steel);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.service-link-list small::after {
+  margin-left: 8px;
+  content: "↗";
+}
+
+.service-link-list a:hover small,
+.service-link-list a:focus-visible small {
+  color: var(--ink);
+}
+
+.service-link-list--paper {
+  border-color: var(--line-dark);
+}
+
+.service-link-list--paper a {
+  border-color: var(--line-dark);
+  background: var(--white);
+  color: var(--ink);
+}
+
+.service-link-list--paper small {
+  color: #454d49;
+}
+
+.service-link-list--paper a:hover,
+.service-link-list--paper a:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.service-link-list--paper a:hover small,
+.service-link-list--paper a:focus-visible small {
+  color: var(--steel);
 }
 
 .section--paper .service-preview-grid {
@@ -1035,6 +1154,11 @@ p {
 .section--paper .service-preview-card:hover p,
 .section--paper .service-preview-card:focus-visible p {
   color: var(--steel);
+}
+
+.section--paper .service-preview-card:hover .service-preview-card__action,
+.section--paper .service-preview-card:focus-visible .service-preview-card__action {
+  color: var(--orange-bright);
 }
 
 .section--paper .service-preview-card:hover .service-preview-card__index,
@@ -1294,6 +1418,70 @@ p {
   border: 1px solid var(--line-dark);
   background: var(--paper);
   box-shadow: 8px 8px 0 rgba(13,17,16,.15);
+}
+
+.symptom-shortcuts {
+  display: grid;
+  grid-template-columns: minmax(230px, .34fr) minmax(0, .66fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: start;
+  margin-bottom: 46px;
+  padding-block: 28px;
+  border-block: 1px solid var(--line-strong);
+}
+
+.symptom-shortcuts h3 {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 3.2vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.symptom-shortcuts__links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.symptom-shortcuts__links a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  color: var(--paper);
+  font-size: .79rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 100ms ease;
+}
+
+.symptom-shortcuts__links a::after {
+  flex: 0 0 auto;
+  color: var(--orange-bright);
+  content: "↗";
+}
+
+.symptom-shortcuts__links a:hover,
+.symptom-shortcuts__links a:focus-visible {
+  border-color: var(--acid);
+  background: var(--acid);
+  color: var(--ink);
+}
+
+.symptom-shortcuts__links a:hover::after,
+.symptom-shortcuts__links a:focus-visible::after {
+  color: var(--ink);
+}
+
+.symptom-shortcuts__links a:active {
+  transform: scale(.992);
 }
 
 .service-search {
@@ -2088,6 +2276,10 @@ body.nav-open .back-to-top {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .service-link-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .tpms-feature {
     grid-template-columns: 1fr;
   }
@@ -2320,12 +2512,24 @@ body.nav-open .back-to-top {
     grid-template-columns: 1fr;
   }
 
+  .service-link-list {
+    grid-template-columns: 1fr;
+  }
+
+  .service-link-list a {
+    min-height: 98px;
+  }
+
+  .symptom-shortcuts {
+    grid-template-columns: 1fr;
+  }
+
   .service-preview-card {
     min-height: 225px;
   }
 
   .symptom-entry .service-preview-card {
-    min-height: 210px;
+    min-height: 320px;
   }
 
   .tpms-feature__copy {
@@ -2377,6 +2581,10 @@ body.nav-open .back-to-top {
     min-width: 0;
     margin-top: 0;
     text-align: left;
+  }
+
+  .symptom-shortcuts__links {
+    grid-template-columns: 1fr;
   }
 
   .service-group summary {

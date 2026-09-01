@@ -1,16 +1,19 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en-US" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0d1110">
-  <meta name="description" content="Central Auto Repair provides maintenance, diagnostics, brake, tire, transmission, electrical, cooling, and TPMS programming services in Edison, New Jersey.">
+  <meta name="description" content="Need auto repair in Edison, NJ? Call Central Auto Repair on Route 27 for maintenance, diagnostics, brakes, tires, and TPMS programming.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Central Auto Repair">
   <meta property="og:title" content="Central Auto Repair | Edison, NJ">
-  <meta property="og:description" content="Straightforward auto repair, maintenance, tire service, diagnostics, and TPMS programming in Edison, New Jersey.">
+  <meta property="og:description" content="A father-and-son Edison auto repair shop for warning lights, noises, maintenance, and repairs—with a clear next step and no runaround.">
   <meta name="twitter:card" content="summary">
-  <title>Central Auto Repair | Auto Repair &amp; TPMS Programming in Edison, NJ</title>
+  <title>Auto Repair in Edison, NJ | Central Auto Repair</title>
+  <link rel="alternate" hreflang="en-US" href="/">
+  <link rel="alternate" hreflang="es-US" href="/es/">
+  <link rel="alternate" hreflang="x-default" href="/">
   <link rel="icon" href="/assets/icons/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-180.png" sizes="180x180">
   <link rel="manifest" href="/site.webmanifest">
@@ -18,13 +21,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Saira+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/locale.css">
   <script src="/assets/js/site.js" defer></script>
+  <script src="/assets/js/locale.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "AutoRepair",
     "name": "Central Auto Repair",
+    "description": "A father-and-son auto repair shop in Edison, New Jersey, offering maintenance, diagnostics, repair, tire service, and TPMS programming.",
     "telephone": "+1-732-822-4534",
+    "knowsLanguage": ["English", "Spanish"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "82 Lincoln Hwy",
@@ -64,11 +71,14 @@
       <nav class="desktop-nav" aria-label="Primary navigation">
         <ul>
           <li><a href="/services/">Services</a></li>
-          <li><a href="/tpms-programming/">TPMS</a></li>
           <li><a href="/about/">About</a></li>
           <li><a href="/contact/">Contact</a></li>
         </ul>
       </nav>
+      <div class="locale-selector" data-locale-selector>
+        <button class="locale-selector__button" type="button" aria-label="Language: English" aria-controls="language-menu" aria-haspopup="menu" aria-expanded="false" data-locale-toggle><span class="locale-selector__globe" aria-hidden="true"></span><span>EN</span><span class="locale-selector__chevron" aria-hidden="true"></span></button>
+        <ul class="locale-selector__menu" id="language-menu" aria-label="Choose a language" data-locale-menu hidden><li><a class="locale-selector__option" href="/" lang="en-US" hreflang="en-US" aria-current="true"><span class="locale-selector__name">English</span><span class="locale-selector__code">EN</span></a></li><li><a class="locale-selector__option" href="/es/" lang="es-US" hreflang="es-US"><span class="locale-selector__name">Español</span><span class="locale-selector__code">ES</span></a></li></ul>
+      </div>
       <a class="header-cta" href="tel:+17328224534">Call the shop</a>
       <button class="menu-button" type="button" aria-label="Open navigation menu" aria-controls="mobile-navigation" aria-expanded="false" data-menu-button>
         <span class="menu-button__lines" aria-hidden="true"></span>
@@ -80,9 +90,8 @@
     <div class="nav-drawer__inner">
       <ul class="nav-drawer__links">
         <li><a href="/services/"><span class="nav-drawer__index">01</span><span>Services</span></a></li>
-        <li><a href="/tpms-programming/"><span class="nav-drawer__index">02</span><span>TPMS</span></a></li>
-        <li><a href="/about/"><span class="nav-drawer__index">03</span><span>About</span></a></li>
-        <li><a href="/contact/"><span class="nav-drawer__index">04</span><span>Contact</span></a></li>
+        <li><a href="/about/"><span class="nav-drawer__index">02</span><span>About</span></a></li>
+        <li><a href="/contact/"><span class="nav-drawer__index">03</span><span>Contact</span></a></li>
       </ul>
       <div class="nav-drawer__aside">
         <p>Back on the road. No runaround.</p>
@@ -100,7 +109,7 @@
       <div class="hero__copy">
         <p class="eyebrow">Local auto repair · Route 27</p>
         <h1 id="home-title">Back on<br>the road.<span>No<br>runaround.</span></h1>
-        <p class="hero__lead">Maintenance, diagnostics, brakes, tires, transmission work, and TPMS programming—organized clearly so you can find the right next step.</p>
+        <p class="hero__lead">Tell us what your car is doing. Central Auto Repair is a father-and-son shop in Edison for maintenance, diagnostics, repairs, tires, and TPMS programming.</p>
         <div class="hero__actions">
           <a class="button" href="tel:+17328224534">Call 732-822-4534</a>
           <a class="button button--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Get directions</a>
@@ -108,17 +117,39 @@
         <p class="hero__meta">82 Lincoln Highway, Edison, NJ 08820 · Monday–Saturday, 9 AM–7 PM</p>
       </div>
       <div class="hero__visual" aria-hidden="true">
-        <span class="hero__bay-label">Bay 01 / Edison<span>Ready for inspection</span></span>
-        <img src="/assets/images/bayline-car.svg" width="900" height="330" alt="" fetchpriority="high">
-        <span class="hero__service-label">Highlighted service<strong>TPMS</strong></span>
+        <span class="hero__bay-label">Route 27 / Edison<span>Diagnostic clarity</span></span>
+        <picture>
+          <source media="(min-width: 769px)" srcset="/assets/images/bayline-diagnostic-craft-1536.webp">
+          <img src="/assets/images/bayline-diagnostic-craft-768.webp" width="768" height="512" alt="" fetchpriority="high" decoding="async">
+        </picture>
       </div>
     </section>
 
     <div class="quick-rail" aria-label="How to get started">
       <div class="quick-rail__item"><span class="quick-rail__number">01</span><span><strong>Call first</strong><span>Tell us what your vehicle is doing.</span></span></div>
-      <div class="quick-rail__item"><span class="quick-rail__number">02</span><span><strong>Find the service</strong><span>Search the complete catalog by system or repair.</span></span></div>
+      <div class="quick-rail__item"><span class="quick-rail__number">02</span><span><strong>Find the service</strong><span>Search by symptom, system, or repair.</span></span></div>
       <div class="quick-rail__item"><span class="quick-rail__number">03</span><span><strong>Visit the shop</strong><span>Find Central on Lincoln Highway in Edison.</span></span></div>
     </div>
+
+    <section class="section section--paper symptom-entry" aria-labelledby="symptom-entry-title">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">Start with what you notice</p>
+            <h2 id="symptom-entry-title">You do not have to diagnose it.</h2>
+          </div>
+          <p>Choose the closest symptom or call and describe what changed. Central can help identify the right place to begin.</p>
+        </div>
+        <div class="service-preview-grid symptom-entry__grid reveal">
+          <a class="service-preview-card" href="/services/#engine"><span class="service-preview-card__index">WARNING LIGHT</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Check-engine light</h3><p>The light is on, flashing, or appeared with a change in performance.</p></div></a>
+          <a class="service-preview-card" href="/services/#brakes"><span class="service-preview-card__index">NOISE / VIBRATION</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Brake concern</h3><p>You hear squealing or grinding, feel vibration, or notice a change while stopping.</p></div></a>
+          <a class="service-preview-card" href="/services/#battery"><span class="service-preview-card__index">NO START</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Car will not start</h3><p>The engine will not turn over, cranks slowly, or starting has become unreliable.</p></div></a>
+          <a class="service-preview-card" href="/services/#cooling"><span class="service-preview-card__index">RUNNING HOT</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Overheating or coolant concern</h3><p>The temperature is climbing, coolant is leaking, or the vehicle is running hotter than usual.</p></div></a>
+          <a class="service-preview-card" href="/services/#climate"><span class="service-preview-card__index">CABIN COMFORT</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Heat or A/C is not working</h3><p>Airflow or temperature is not keeping the cabin comfortable.</p></div></a>
+          <a class="service-preview-card service-preview-card--accent" href="/tpms-programming/"><span class="service-preview-card__index">TIRE LIGHT</span><span class="service-preview-card__arrow" aria-hidden="true">↗</span><div><h3>Tire-pressure light</h3><p>The light stays on, flashes, or appeared after tire or sensor work.</p></div></a>
+        </div>
+      </div>
+    </section>
 
     <section class="section section--raised" aria-labelledby="service-preview-title">
       <div class="shell">
@@ -128,7 +159,7 @@
             <h2 id="service-preview-title">The work your car is asking for.</h2>
           </div>
           <div>
-            <p>Start with the system that needs attention. The full directory includes 89 individual services grouped into practical categories.</p>
+            <p>Start with the system that needs attention, then open the category for the services that may apply. If you are unsure, call and describe the symptom.</p>
             <a class="text-link" href="/services/">Search all services</a>
           </div>
         </div>
@@ -153,13 +184,20 @@
       <div class="tpms-feature__copy reveal">
         <p class="eyebrow">A Central specialty</p>
         <h2 id="home-tpms-title">Tire light still on?</h2>
-        <p>Central Auto Repair provides TPMS programming. We can check the concern and determine the appropriate programming or relearn step for your vehicle.</p>
+        <p>Central Auto Repair provides TPMS programming. Call with your vehicle and sensor details so the shop can check compatibility and discuss the right starting point.</p>
         <ul class="tpms-feature__list">
           <li>TPMS programming</li>
-          <li>Sensor relearn support</li>
-          <li>Pressure-light diagnosis</li>
+          <li>Vehicle and sensor details</li>
+          <li>Warning-light starting point</li>
         </ul>
-        <a class="button button--dark" href="/tpms-programming/">Explore TPMS service</a>
+        <a class="button button--dark" href="/tpms-programming/">Check TPMS details</a>
+      </div>
+    </section>
+
+    <section class="section section--paper home-story" aria-labelledby="home-story-title">
+      <div class="shell prose-grid reveal">
+        <aside class="prose-grid__aside"><p class="eyebrow">The people behind Central</p><h2 id="home-story-title">A father-and-son shop.</h2></aside>
+        <div class="prose-grid__content"><p>Central Auto Repair is owned and led by a son who works alongside his father. Together, they pair the father’s decades of hands-on auto repair experience with the son’s responsibility for leading the shop today.</p><p>For customers, the story starts simply: call with the problem, speak directly with the shop, and get a clear next step for the vehicle.</p><a class="text-link" href="/about/">Meet the family behind Central</a></div>
       </div>
     </section>
 
@@ -196,9 +234,9 @@
     <div class="site-footer__main shell">
       <div class="footer-intro">
         <a class="brand" href="/" aria-label="Central Auto Repair home"><span class="brand__mark" aria-hidden="true">CA</span><span class="brand__name">Central Auto Repair<small>Edison · New Jersey</small></span></a>
-        <p>Maintenance, diagnostics, repair, tire service, and TPMS programming for Edison drivers.</p>
+        <p>A father-and-son auto repair shop in Edison.</p>
       </div>
-      <nav class="footer-column" aria-label="Footer navigation"><h2>Navigate</h2><ul><li><a href="/services/">Services</a></li><li><a href="/tpms-programming/">TPMS programming</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+      <nav class="footer-column" aria-label="Footer navigation"><h2>Navigate</h2><ul><li><a href="/services/">Services</a></li><li><a href="/tpms-programming/">Tire Light / TPMS</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
       <div class="footer-column"><h2>Visit</h2><address>82 Lincoln Highway<br>Edison, NJ 08820</address><ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Google Maps directions</a></li></ul></div>
       <div class="footer-column"><h2>Contact</h2><ul><li><a href="tel:+17328224534">732-822-4534</a></li><li>Mon–Sat: 9 AM–7 PM</li><li>Sunday: Closed</li></ul></div>
     </div>
@@ -207,5 +245,6 @@
 
   <nav class="mobile-actions" aria-label="Mobile quick actions"><a href="tel:+17328224534">Call now</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Central+Auto+Repair+82+Lincoln+Hwy+Edison+NJ+08820">Directions</a></nav>
   <button class="back-to-top" type="button" aria-label="Back to top" data-back-to-top>↑</button>
+  <noscript data-locale-fallback><nav class="locale-fallback" aria-label="Language"><a href="/" lang="en-US" hreflang="en-US">EN</a><a href="/es/" lang="es-US" hreflang="es-US">ES</a></nav></noscript>
 </body>
 </html>

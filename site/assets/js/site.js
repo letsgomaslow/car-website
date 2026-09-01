@@ -4,8 +4,7 @@ document.documentElement.classList.add('has-js');
 const menuButton = document.querySelector('[data-menu-button]');
 const navDrawer = document.querySelector('[data-nav-drawer]');
 const pageMain = document.querySelector('main');
-const pageFooter = document.querySelector('.site-footer');
-const utilityBar = document.querySelector('.utility-bar');
+const siteHeader = document.querySelector('.site-header');
 const scrollProgress = document.querySelector('[data-scroll-progress]');
 const backToTop = document.querySelector('[data-back-to-top]');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -20,10 +19,31 @@ const getFocusableElements = (container) => {
   )].filter((element) => !element.hidden && element.getClientRects().length > 0);
 };
 
+const modalBackgroundElements = [
+  ...[...document.body.children].filter((element) => element !== navDrawer && element !== siteHeader),
+  ...[...(siteHeader?.querySelector('.site-header__inner')?.children || [])].filter((element) => element !== menuButton),
+];
+
 const setPageInert = (isInert) => {
-  [pageMain, pageFooter, utilityBar].forEach((element) => {
+  modalBackgroundElements.forEach((element) => {
     if (element) element.inert = isInert;
   });
+};
+
+const updateDrawerOffset = () => {
+  if (!navDrawer || !siteHeader) return;
+  const headerRect = siteHeader.getBoundingClientRect();
+  navDrawer.style.insetBlockStart = `${Math.max(0, headerRect.height, headerRect.bottom)}px`;
+};
+
+const setBackToTopVisibility = (isVisible) => {
+  if (!backToTop) return;
+  const shouldShow = isVisible && !document.body.classList.contains('nav-open');
+  backToTop.classList.toggle('is-visible', shouldShow);
+  backToTop.setAttribute('aria-hidden', String(!shouldShow));
+  backToTop.inert = !shouldShow;
+  if (shouldShow) backToTop.removeAttribute('tabindex');
+  else backToTop.setAttribute('tabindex', '-1');
 };
 
 const closeMenu = ({ restoreFocus = true } = {}) => {
@@ -35,6 +55,7 @@ const closeMenu = ({ restoreFocus = true } = {}) => {
   navDrawer.inert = true;
   document.body.classList.remove('nav-open');
   setPageInert(false);
+  updateScrollUI();
 
   if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
     lastFocusedElement.focus();
@@ -51,6 +72,8 @@ const openMenu = () => {
   navDrawer.setAttribute('aria-hidden', 'false');
   document.body.classList.add('nav-open');
   setPageInert(true);
+  setBackToTopVisibility(false);
+  updateDrawerOffset();
 
   window.setTimeout(() => {
     navDrawer.querySelector('a[href]')?.focus({ preventScroll: true });
@@ -67,6 +90,13 @@ if (menuButton && navDrawer) {
   navDrawer.addEventListener('click', (event) => {
     if (event.target.closest('a[href]')) closeMenu({ restoreFocus: false });
   });
+
+  document.addEventListener('click', (event) => {
+    if (!navDrawer.classList.contains('is-open')) return;
+    if (navDrawer.contains(event.target) || menuButton.contains(event.target)) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
 
   document.addEventListener('keydown', (event) => {
     if (!navDrawer.classList.contains('is-open')) return;
@@ -95,7 +125,9 @@ if (menuButton && navDrawer) {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1080 && navDrawer.classList.contains('is-open')) {
       closeMenu({ restoreFocus: false });
+      return;
     }
+    if (navDrawer.classList.contains('is-open')) updateDrawerOffset();
   });
 }
 
@@ -104,7 +136,7 @@ const updateScrollUI = () => {
   const progress = scrollableDistance > 0 ? Math.min(window.scrollY / scrollableDistance, 1) : 0;
 
   if (scrollProgress) scrollProgress.style.transform = `scaleX(${progress})`;
-  if (backToTop) backToTop.classList.toggle('is-visible', window.scrollY > 700);
+  setBackToTopVisibility(window.scrollY > 700);
 };
 
 window.addEventListener('scroll', updateScrollUI, { passive: true });
@@ -112,6 +144,15 @@ window.addEventListener('resize', updateScrollUI);
 updateScrollUI();
 
 backToTop?.addEventListener('click', () => {
+  const focusTarget = document.querySelector('main h1') || pageMain;
+  if (focusTarget instanceof HTMLElement) {
+    const hadTabIndex = focusTarget.hasAttribute('tabindex');
+    if (!hadTabIndex) focusTarget.setAttribute('tabindex', '-1');
+    focusTarget.focus({ preventScroll: true });
+    if (!hadTabIndex) {
+      focusTarget.addEventListener('blur', () => focusTarget.removeAttribute('tabindex'), { once: true });
+    }
+  }
   window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
 });
 
@@ -175,6 +216,29 @@ if (serviceFilter) {
   serviceFilter.addEventListener('search', () => filterServices());
   filterServices({ updateUrl: false });
 }
+
+const openServiceGroupFromHash = ({ focusSummary = false } = {}) => {
+  if (!window.location.hash || !serviceGroups.length) return;
+
+  let targetId = '';
+  try {
+    targetId = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+
+  const targetGroup = serviceGroups.find((group) => group.id === targetId);
+  if (!targetGroup || targetGroup.hidden) return;
+  targetGroup.open = true;
+
+  window.requestAnimationFrame(() => {
+    targetGroup.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    if (focusSummary) targetGroup.querySelector('summary')?.focus({ preventScroll: true });
+  });
+};
+
+openServiceGroupFromHash();
+window.addEventListener('hashchange', () => openServiceGroupFromHash({ focusSummary: true }));
 
 document.querySelectorAll('[data-current-year]').forEach((element) => {
   element.textContent = String(new Date().getFullYear());

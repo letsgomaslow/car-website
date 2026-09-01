@@ -1,0 +1,173 @@
+.locale-selector {
+  position: relative;
+  z-index: 20;
+  flex: 0 0 auto;
+}
+
+.site-header__inner {
+  grid-template-columns: auto 1fr auto auto;
+  gap: clamp(14px, 2.2vw, 34px);
+}
+
+.locale-selector__button {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  color: #fff;
+  background: transparent;
+  font: 800 0.78rem/1 Manrope, sans-serif;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.locale-selector__button:hover,
+.locale-selector__button[aria-expanded="true"] {
+  border-color: #f36b21;
+  color: #fff;
+  background: rgba(243, 107, 33, 0.16);
+}
+
+.locale-selector__button:focus-visible,
+.locale-selector__option:focus-visible {
+  outline: 3px solid #f36b21;
+  outline-offset: 3px;
+}
+
+.locale-selector__globe {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  border: 1.7px solid currentColor;
+  border-radius: 50%;
+  position: relative;
+}
+
+.locale-selector__globe::before,
+.locale-selector__globe::after {
+  content: "";
+  position: absolute;
+  inset: 2px 4px;
+  border-left: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.locale-selector__globe::after {
+  inset: 6px 1px auto;
+  height: 0;
+  border: 0;
+  border-top: 1px solid currentColor;
+  border-radius: 0;
+}
+
+.locale-selector__chevron {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.locale-selector__button[aria-expanded="true"] .locale-selector__chevron {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.locale-selector__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.55rem);
+  min-width: 11rem;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #171c1a;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.36);
+}
+
+.locale-selector__menu[hidden] { display: none; }
+
+.locale-selector__option {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.75rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.locale-selector__option:hover {
+  color: #171c1a;
+  background: #f36b21;
+}
+
+.locale-selector__option[aria-current="true"]::after {
+  content: "✓";
+  color: #f36b21;
+}
+
+.locale-selector__option[aria-current="true"]:hover::after { color: #171c1a; }
+
+.locale-selector__name { white-space: nowrap; }
+.locale-selector__code { font-size: 0.72rem; letter-spacing: 0.1em; opacity: 0.78; }
+
+.locale-fallback {
+  position: fixed;
+  z-index: 180;
+  inset-block-end: max(1rem, calc(74px + env(safe-area-inset-bottom)));
+  inset-inline-end: 1rem;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: #171c1a;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.locale-fallback a {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.7rem;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.locale-fallback a:hover,
+.locale-fallback a:focus-visible {
+  color: #171c1a;
+  background: #f36b21;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .site-header__inner > .locale-selector { margin-left: auto; }
+  .locale-selector__button { padding-inline: 0.62rem; }
+  .locale-selector__menu { right: 0; }
+}
+
+@media (max-width: 1080px) {
+  .site-header__inner { grid-template-columns: 1fr auto auto; }
+  .no-js .site-header__inner { grid-template-columns: 1fr; }
+  .no-js .locale-selector { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locale-selector__button,
+  .locale-selector__chevron { transition-duration: 0.01ms !important; }
+}

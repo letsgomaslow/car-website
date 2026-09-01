@@ -1,0 +1,37 @@
+{
+  "defaultLocale": "en-US",
+  "locales": [
+    {
+      "id": "en-US",
+      "code": "EN",
+      "label": "English",
+      "selfLabel": "English"
+    },
+    {
+      "id": "es-US",
+      "code": "ES",
+      "label": "Spanish",
+      "selfLabel": "Español"
+    }
+  ],
+  "routes": {
+    "home": { "en-US": "/", "es-US": "/es/" },
+    "services": { "en-US": "/services/", "es-US": "/es/servicios/" },
+    "about": { "en-US": "/about/", "es-US": "/es/nosotros/" },
+    "contact": { "en-US": "/contact/", "es-US": "/es/contacto/" },
+    "privacy": { "en-US": "/privacy/", "es-US": "/es/privacidad/" },
+    "tpms": { "en-US": "/tpms-programming/", "es-US": "/es/servicios/programacion-tpms/" },
+    "notFound": { "en-US": "/404.html", "es-US": "/es/404.html" },
+    "guide.maintenanceOil": { "en-US": "/services/maintenance-oil/", "es-US": "/es/servicios/mantenimiento-aceite/" },
+    "guide.brakes": { "en-US": "/services/brakes/", "es-US": "/es/servicios/frenos/" },
+    "guide.tiresWheels": { "en-US": "/services/tires-wheels/", "es-US": "/es/servicios/llantas-rines/" },
+    "guide.engineDiagnostics": { "en-US": "/services/engine-diagnostics/", "es-US": "/es/servicios/diagnostico-motor/" },
+    "guide.batteryElectrical": { "en-US": "/services/battery-electrical/", "es-US": "/es/servicios/bateria-sistema-electrico/" },
+    "guide.heatingAirConditioning": { "en-US": "/services/heating-air-conditioning/", "es-US": "/es/servicios/calefaccion-aire-acondicionado/" },
+    "guide.coolingOverheating": { "en-US": "/services/cooling-overheating/", "es-US": "/es/servicios/enfriamiento-sobrecalentamiento/" },
+    "guide.steeringSuspension": { "en-US": "/services/steering-suspension/", "es-US": "/es/servicios/direccion-suspension/" },
+    "guide.beltsHoses": { "en-US": "/services/belts-hoses/", "es-US": "/es/servicios/bandas-mangueras/" },
+    "guide.transmissionDrivetrain": { "en-US": "/services/transmission-drivetrain/", "es-US": "/es/servicios/transmision-tren-motriz/" },
+    "guide.exhaustEmissions": { "en-US": "/services/exhaust-emissions/", "es-US": "/es/servicios/escape-emisiones/" }
+  }
+}
